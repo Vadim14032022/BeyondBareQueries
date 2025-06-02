@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker stop bbq_container
+docker stop bbq_container_vadim

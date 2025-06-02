@@ -10,7 +10,7 @@ warnings.filterwarnings('ignore')
 from datetime import datetime
 
 import sys
-sys.path.append("/home/jovyan/Tatiana_Z/bbq_demo/MobileSAM/MobileSAMv2")
+#sys.path.append("/home/jovyan/Tatiana_Z/bbq_demo/MobileSAM/MobileSAMv2")
 
 import cv2
 import json
@@ -23,6 +23,7 @@ from loguru import logger
 import imageio
 from PIL import Image
 import matplotlib.pyplot as plt
+from matplotlib import animation
 import open3d as o3d
 
 from gradslam.datasets import datautils
@@ -40,13 +41,13 @@ logging.config.dictConfig({
 })
 
 # Путь к файлу, куда клиент отправляет текст
-TEXT_FILE = "/home/jovyan/Tatiana_Z/bbq_demo/user_query/text.txt"
-COLOR_PATH = "/home/jovyan/Tatiana_Z/bbq_demo/user_query/image.png"
-DEPTH_PATH = "/home/jovyan/Tatiana_Z/bbq_demo/user_query/depth.png"
-POSE_PATH = "/home/jovyan/Tatiana_Z/bbq_demo/user_query/pose.txt"
-CONFIG_FILE = "/home/jovyan/Tatiana_Z/bbq_demo/BeyondBareQueries/examples/configs/lab/room0.yaml"
-SAVE_PATH = "/home/jovyan/Tatiana_Z/bbq_demo/outputs"
-LLAMA_PATH = "/workspace-SR006.nfs2/Tatiana_Z/Meta-Llama-3-8B-Instruct"
+TEXT_FILE = "text.txt"
+COLOR_PATH = "image.png"
+DEPTH_PATH = "depth.png"
+POSE_PATH = "pose.txt"
+CONFIG_FILE = "examples/configs/lab/room0.yaml"
+SAVE_PATH = "outputs"
+LLAMA_PATH = "/datasets/Meta-Llama-3-8B-Instruct"
 
 DEBUG = False
 
@@ -256,7 +257,7 @@ def project_point_cloud_to_image(image, depth_image, camera_pose, intrinsics_mat
 
 
 def draw_answer(result, targets, anchors, relations, segmentation, depth, intrinsics, pose, user_query, LLM_answer, save_filename, no_json=True):
-
+    json_table = []
     camera_pose = np.linalg.inv(pose.cpu().numpy())
 
     objects_by_id = {
@@ -289,7 +290,8 @@ def draw_answer(result, targets, anchors, relations, segmentation, depth, intrin
     
     # Add labels to each point
     for i in range(len(points)):
-        ax1.text(x[i], y[i], z[i] + 0.1 + float(np.random.random()/2), labels[i], fontsize=6, color='black', ha='center',)
+        ax1.text(x[i], y[i], z[i]+0.02, result[i]['id'], fontsize=8, color='black', ha='center',)
+        json_table.append({'label': labels[i], 'color': '#7dabf5'})
 
     if len(targets) > 0:
         points = np.array([
@@ -308,7 +310,8 @@ def draw_answer(result, targets, anchors, relations, segmentation, depth, intrin
         
         # Add labels to each point
         for i in range(len(points)):
-            ax1.text(x[i], y[i], z[i]+ 0.1 +float(np.random.random()/2), labels[i], fontsize=6, color='black', ha='center',)
+            ax1.text(x[i], y[i], z[i]+0.02, targets[i], fontsize=8, color='black', ha='center',)
+            json_table.append({'label': labels[i], 'color': '#53c44b'})
 
     if len(anchors) > 0:
         points = np.array([
@@ -327,7 +330,9 @@ def draw_answer(result, targets, anchors, relations, segmentation, depth, intrin
         
         # Add labels to each point
         for i in range(len(points)):
-            ax1.text(x[i], y[i], z[i]+ 0.1 +float(np.random.random()/2), labels[i], fontsize=6, color='black', ha='center',)
+            ax1.text(x[i], y[i], z[i]+0.02, anchors[i], fontsize=8, color='black', ha='center',)
+            json_table.append({'label': labels[i], 'color': '#c44b4b'})  
+
         # Labels
         ax1.set_xlabel('X')
         ax1.set_ylabel('Y')
@@ -348,8 +353,22 @@ def draw_answer(result, targets, anchors, relations, segmentation, depth, intrin
             # Add text above the edge
             ax1.text(mid_x, mid_y, mid_z + 0.15, rel[2], fontsize=6, color='red', ha='center')
 
-    plt.savefig(os.path.join(SAVE_PATH, f"3d_{save_filename}"), dpi=300, bbox_inches='tight')
-    
+    def update(angle):
+        ax1.view_init(elev=angle, azim=90)
+        return fig,
+    elev_angles = np.concatenate([
+        np.arange(10, 70, 2), 
+        np.arange(70, 9, -2) 
+    ])
+    rot_animation = animation.FuncAnimation(
+        fig, update, frames=elev_angles, interval=100, blit=False
+    )
+    gif_path = os.path.join(SAVE_PATH, f"3d_{save_filename.split('.')[0]}.gif")
+    rot_animation.save(gif_path, dpi=80, writer='pillow')
+
+    with open(os.path.join(SAVE_PATH, f"table_{save_filename.split('.')[0]}.json"), "w") as f:
+        json.dump(json_table, f)
+
     information = f"User query: {user_query}\n"
 
     with open(os.path.join(SAVE_PATH, f"{save_filename.split('.')[0]}.txt"), "w") as f:
@@ -394,7 +413,7 @@ def draw_answer(result, targets, anchors, relations, segmentation, depth, intrin
             #print(tuple(box_2d[i]), tuple(box_2d[j]))
             cv2.line(segmentation, tuple(box_2d[i]), tuple(box_2d[j]), (0, 0, 255), 1)
         
-        text = f"{obj['id']}: {obj['description']}"
+        text = f"{obj['id']}"
         # Get the text size to create a background rectangle
         (text_width, text_height), _ = cv2.getTextSize(text, font, font_scale, thickness)
 
@@ -475,7 +494,7 @@ def main():
     depth = np.expand_dims(depth, -1)
     depth = torch.from_numpy(depth).to("cuda") / DEPTH_SCALE
 
-    pose = np.loadtxt(POSE_PATH)
+    #pose = np.loadtxt(POSE_PATH)
     #pose = np.array([
     #    [1.0, 0.0, 0.0, 0.0],
     #    [0.0, 1.0, 0.0, 0.0],

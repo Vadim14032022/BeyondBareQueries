@@ -1,0 +1,2 @@
+User query: Are there scissors in the image?
+LLM answer: {'referred objects': ['scissors with id 0', 'scissors with id 6', 'scissors with id 31'], 'anchors': []}

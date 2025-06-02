@@ -1,0 +1,548 @@
+[
+  {
+    "id": 0,
+    "bbox_extent": [
+      0.32,
+      0.13,
+      0.2
+    ],
+    "bbox_center": [
+      -0.18,
+      0.14,
+      1.06
+    ],
+    "description": "Scissors on table."
+  },
+  {
+    "id": 1,
+    "bbox_extent": [
+      0.11,
+      0.1,
+      0.13
+    ],
+    "bbox_center": [
+      -0.84,
+      -0.22,
+      1.59
+    ],
+    "description": "A white book with a brown cover."
+  },
+  {
+    "id": 2,
+    "bbox_extent": [
+      0.14,
+      0.12,
+      0.16
+    ],
+    "bbox_center": [
+      0.22,
+      0.0,
+      1.27
+    ],
+    "description": "A test tube rack."
+  },
+  {
+    "id": 3,
+    "bbox_extent": [
+      0.11,
+      0.07,
+      0.14
+    ],
+    "bbox_center": [
+      0.1,
+      0.07,
+      1.14
+    ],
+    "description": "A white remote control."
+  },
+  {
+    "id": 4,
+    "bbox_extent": [
+      0.05,
+      0.05,
+      0.09
+    ],
+    "bbox_center": [
+      0.33,
+      0.15,
+      1.04
+    ],
+    "description": "Orange and blue box."
+  },
+  {
+    "id": 5,
+    "bbox_extent": [
+      0.05,
+      0.11,
+      0.14
+    ],
+    "bbox_center": [
+      -0.22,
+      -0.06,
+      1.31
+    ],
+    "description": "A white plastic bottle with a label."
+  },
+  {
+    "id": 6,
+    "bbox_extent": [
+      0.13,
+      0.03,
+      0.04
+    ],
+    "bbox_center": [
+      -0.09,
+      0.23,
+      0.93
+    ],
+    "description": "Scissors"
+  },
+  {
+    "id": 7,
+    "bbox_extent": [
+      0.06,
+      0.02,
+      0.03
+    ],
+    "bbox_center": [
+      0.12,
+      0.21,
+      0.95
+    ],
+    "description": "A box of tissues."
+  },
+  {
+    "id": 8,
+    "bbox_extent": [
+      0.05,
+      0.05,
+      0.06
+    ],
+    "bbox_center": [
+      0.02,
+      0.01,
+      1.06
+    ],
+    "description": "A black mug with pens."
+  },
+  {
+    "id": 9,
+    "bbox_extent": [
+      0.06,
+      0.03,
+      0.04
+    ],
+    "bbox_center": [
+      0.28,
+      0.25,
+      0.89
+    ],
+    "description": "A white ring on the floor."
+  },
+  {
+    "id": 10,
+    "bbox_extent": [
+      0.02,
+      0.04,
+      0.05
+    ],
+    "bbox_center": [
+      0.06,
+      0.14,
+      1.04
+    ],
+    "description": "Blue plastic test tube holder."
+  },
+  {
+    "id": 11,
+    "bbox_extent": [
+      0.34,
+      0.06,
+      0.06
+    ],
+    "bbox_center": [
+      0.59,
+      -0.25,
+      1.61
+    ],
+    "description": "A white test tube rack."
+  },
+  {
+    "id": 12,
+    "bbox_extent": [
+      0.07,
+      0.08,
+      0.07
+    ],
+    "bbox_center": [
+      0.01,
+      0.08,
+      1.09
+    ],
+    "description": "A black cup with pens."
+  },
+  {
+    "id": 13,
+    "bbox_extent": [
+      0.11,
+      0.21,
+      0.14
+    ],
+    "bbox_center": [
+      -1.02,
+      -0.32,
+      1.61
+    ],
+    "description": "A white test tube rack."
+  },
+  {
+    "id": 14,
+    "bbox_extent": [
+      0.63,
+      0.32,
+      0.28
+    ],
+    "bbox_center": [
+      0.81,
+      -0.37,
+      1.55
+    ],
+    "description": "A blue wall with a curved design."
+  },
+  {
+    "id": 15,
+    "bbox_extent": [
+      1.49,
+      0.34,
+      0.28
+    ],
+    "bbox_center": [
+      -0.24,
+      -0.38,
+      1.56
+    ],
+    "description": "Two plastic bottles with white caps."
+  },
+  {
+    "id": 16,
+    "bbox_extent": [
+      0.2,
+      0.04,
+      0.04
+    ],
+    "bbox_center": [
+      -0.38,
+      -0.37,
+      1.57
+    ],
+    "description": "A blue wall."
+  },
+  {
+    "id": 17,
+    "bbox_extent": [
+      0.08,
+      0.06,
+      0.09
+    ],
+    "bbox_center": [
+      0.8,
+      -0.21,
+      1.6
+    ],
+    "description": "A white test tube rack."
+  },
+  {
+    "id": 18,
+    "bbox_extent": [
+      0.08,
+      0.04,
+      0.13
+    ],
+    "bbox_center": [
+      0.28,
+      -0.02,
+      1.29
+    ],
+    "description": "A blue flower."
+  },
+  {
+    "id": 19,
+    "bbox_extent": [
+      0.19,
+      0.24,
+      0.18
+    ],
+    "bbox_center": [
+      0.98,
+      -0.42,
+      1.52
+    ],
+    "description": "A blue wall."
+  },
+  {
+    "id": 20,
+    "bbox_extent": [
+      0.09,
+      0.04,
+      0.06
+    ],
+    "bbox_center": [
+      -0.19,
+      -0.4,
+      1.55
+    ],
+    "description": "A wall on the side of a building."
+  },
+  {
+    "id": 21,
+    "bbox_extent": [
+      0.04,
+      0.1,
+      0.06
+    ],
+    "bbox_center": [
+      -0.13,
+      -0.37,
+      1.56
+    ],
+    "description": "A blue wall."
+  },
+  {
+    "id": 22,
+    "bbox_extent": [
+      0.09,
+      0.07,
+      0.11
+    ],
+    "bbox_center": [
+      0.33,
+      0.02,
+      1.25
+    ],
+    "description": "A blue flower."
+  },
+  {
+    "id": 23,
+    "bbox_extent": [
+      0.07,
+      0.05,
+      0.06
+    ],
+    "bbox_center": [
+      0.13,
+      0.01,
+      1.23
+    ],
+    "description": "Remote control"
+  },
+  {
+    "id": 24,
+    "bbox_extent": [
+      0.05,
+      0.05,
+      0.07
+    ],
+    "bbox_center": [
+      0.19,
+      0.15,
+      1.03
+    ],
+    "description": "Blue and brown pen."
+  },
+  {
+    "id": 25,
+    "bbox_extent": [
+      0.11,
+      0.03,
+      0.08
+    ],
+    "bbox_center": [
+      0.56,
+      -0.17,
+      1.52
+    ],
+    "description": "A white test tube rack."
+  },
+  {
+    "id": 26,
+    "bbox_extent": [
+      0.36,
+      0.17,
+      0.26
+    ],
+    "bbox_center": [
+      0.59,
+      -0.16,
+      1.52
+    ],
+    "description": "A test tube rack."
+  },
+  {
+    "id": 27,
+    "bbox_extent": [
+      0.04,
+      0.03,
+      0.04
+    ],
+    "bbox_center": [
+      0.16,
+      0.12,
+      1.09
+    ],
+    "description": "Blue and brown pen."
+  },
+  {
+    "id": 28,
+    "bbox_extent": [
+      0.04,
+      0.09,
+      0.07
+    ],
+    "bbox_center": [
+      -0.18,
+      -0.38,
+      1.56
+    ],
+    "description": "A white test tube rack."
+  },
+  {
+    "id": 29,
+    "bbox_extent": [
+      0.09,
+      0.03,
+      0.04
+    ],
+    "bbox_center": [
+      -0.8,
+      -0.3,
+      1.61
+    ],
+    "description": "A white test tube rack."
+  },
+  {
+    "id": 30,
+    "bbox_extent": [
+      0.06,
+      0.04,
+      0.04
+    ],
+    "bbox_center": [
+      0.21,
+      0.03,
+      1.19
+    ],
+    "description": "A test tube rack."
+  },
+  {
+    "id": 31,
+    "bbox_extent": [
+      0.05,
+      0.02,
+      0.03
+    ],
+    "bbox_center": [
+      -0.14,
+      0.21,
+      0.95
+    ],
+    "description": "Scissors"
+  },
+  {
+    "id": 32,
+    "bbox_extent": [
+      0.03,
+      0.11,
+      0.09
+    ],
+    "bbox_center": [
+      -0.16,
+      -0.09,
+      1.33
+    ],
+    "description": "A bottle of liquid."
+  },
+  {
+    "id": 33,
+    "bbox_extent": [
+      0.08,
+      0.01,
+      0.01
+    ],
+    "bbox_center": [
+      0.09,
+      0.27,
+      0.84
+    ],
+    "description": "A green and white pen."
+  },
+  {
+    "id": 34,
+    "bbox_extent": [
+      0.09,
+      0.09,
+      0.14
+    ],
+    "bbox_center": [
+      0.79,
+      -0.14,
+      1.5
+    ],
+    "description": "A black metal shelf."
+  },
+  {
+    "id": 35,
+    "bbox_extent": [
+      0.05,
+      0.03,
+      0.03
+    ],
+    "bbox_center": [
+      0.23,
+      0.06,
+      1.18
+    ],
+    "description": "A test tube rack."
+  },
+  {
+    "id": 36,
+    "bbox_extent": [
+      0.09,
+      0.05,
+      0.08
+    ],
+    "bbox_center": [
+      0.33,
+      0.03,
+      1.23
+    ],
+    "description": "A blue flower with a green stem."
+  },
+  {
+    "id": 37,
+    "bbox_extent": [
+      0.05,
+      0.01,
+      0.02
+    ],
+    "bbox_center": [
+      0.15,
+      0.27,
+      0.85
+    ],
+    "description": "Green test tube with white label."
+  },
+  {
+    "id": 38,
+    "bbox_extent": [
+      0.09,
+      0.05,
+      0.05
+    ],
+    "bbox_center": [
+      -0.06,
+      -0.4,
+      1.54
+    ],
+    "description": "A blue wall."
+  }
+]

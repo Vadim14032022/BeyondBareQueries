@@ -19,5 +19,5 @@ docker run -itd --rm \
            -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
            -v $CODE:/home/docker_user/BeyondBareQueries:rw \
            -v $DATA_PATH:/datasets/:rw \
-           --name bbq_container bbq_image
+           --name bbq_container_vadim bbq_image
 xhost -local:root

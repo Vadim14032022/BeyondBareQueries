@@ -22,7 +22,7 @@ dataset:
 nodes_constructor:
   mask_generator:
     model: "MobileSAM"
-    weights_path: "/home/jovyan/Tatiana_Z/bbq_demo/weight"
+    weights_path: "/home/docker_user/bbq_weights/mobilesamv2/weight"
   dino_generator:
     model: "dinov2_vits14_reg_lc"
     load_size: 448
