@@ -32,6 +32,7 @@ from gradslam.geometry.geometryutils import relative_transformation
 from bbq.datasets import get_dataset
 from bbq.objects_map import NodesConstructor
 from bbq.models import LLaVaChat
+from bbq.models import PlmChat
 from bbq.grounding import Llama3
 
 import logging.config
@@ -71,8 +72,8 @@ with open(CONFIG_FILE) as file:
 nodes_constructor = NodesConstructor(config["nodes_constructor"])
 
 if not DEBUG:
-    chat = LLaVaChat()
-    logger.info("LLaVA chat is initialized.")
+    chat = PlmChat()
+    logger.info("Plm chat is initialized.")
     llm = Llama3(LLAMA_PATH)
     logger.info("LLama3 chat is initialized.")
 
@@ -159,6 +160,7 @@ def describe_objects(objects):
             mask = object_["local_mask"]
             image = image.resize((mask.shape[1], mask.shape[0]), Image.LANCZOS)
             image_crop = crop_image(image, mask)
+            image_crop.save(f'./crop_images/crop_{idx}.jpg')
             image_features = [image_crop]
             image_sizes = [image.size for image in image_features]
             image_features = chat.preprocess_image(image_features)
