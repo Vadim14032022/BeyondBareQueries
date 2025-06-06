@@ -160,7 +160,7 @@ def describe_objects(objects):
             mask = object_["local_mask"]
             image = image.resize((mask.shape[1], mask.shape[0]), Image.LANCZOS)
             image_crop = crop_image(image, mask)
-            image_crop.save(f'./crop_images/crop_{idx}.jpg')
+#            image_crop.save(f'./crop_images/crop_{idx}.jpg')
             image_features = [image_crop]
             image_sizes = [image.size for image in image_features]
             image_features = chat.preprocess_image(image_features)
@@ -313,7 +313,7 @@ def draw_answer(result, targets, anchors, relations, segmentation, depth, intrin
         # Add labels to each point
         for i in range(len(points)):
             ax1.text(x[i], y[i], z[i]+0.02, targets[i], fontsize=8, color='black', ha='center',)
-            json_table.append({'label': labels[i], 'color': '#53c44b'})
+            json_table = [{'label': labels[i], 'color': '#53c44b'}] + json_table
 
     if len(anchors) > 0:
         points = np.array([
@@ -333,7 +333,7 @@ def draw_answer(result, targets, anchors, relations, segmentation, depth, intrin
         # Add labels to each point
         for i in range(len(points)):
             ax1.text(x[i], y[i], z[i]+0.02, anchors[i], fontsize=8, color='black', ha='center',)
-            json_table.append({'label': labels[i], 'color': '#c44b4b'})  
+            json_table = [{'label': labels[i], 'color': '#c44b4b'}] + json_table
 
         # Labels
         ax1.set_xlabel('X')

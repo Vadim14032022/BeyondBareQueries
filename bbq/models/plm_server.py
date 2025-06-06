@@ -21,7 +21,7 @@ app = FastAPI()
 
 # ckpt = "facebook/Perception-LM-1B"
 # ckpt = "facebook/Perception-LM-3B"
-ckpt = "/datasets/KM-Models/Perception-LM-1B"
+ckpt = "/datasets/KM-Models/Perception-LM-3B"
 model, tokenizer, config = load_consolidated_model_and_tokenizer(ckpt)
 number_of_tiles = 4
 transform = get_image_transform(
