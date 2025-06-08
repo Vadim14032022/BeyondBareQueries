@@ -1,2 +1,2 @@
-User query: Are there a cup?
-LLM answer: {'referred objects': ['a black cup with a blue object and three white and brown objects inside with id 8', 'a black cup with id 12'], 'anchors': []}
+User query: Are there bobr kurova?
+LLM answer: {'referred objects': [], 'anchors': []}

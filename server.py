@@ -603,16 +603,20 @@ def main():
 
     draw_answer(result, targets, anchors, filtered_relations, segmentation2, depth, INTRINSICS, pose, user_query, json_answer, "final_answer.png")
 
+def get_file_timestamp(remote_path):
+    if os.path.exists(remote_path):
+        return int(os.path.getmtime(remote_path))
+    return None
+
 def wait_for_message():
     """Ожидает изменения файла text.txt и вызывает main() при обновлении."""
-    last_mod_time = None
+    last_mod_time = get_file_timestamp(TEXT_FILE)
 
     while True:
-        if os.path.exists(TEXT_FILE):
-            mod_time = os.path.getmtime(TEXT_FILE)
-            if last_mod_time is None or mod_time > last_mod_time:
-                last_mod_time = mod_time
-                main()
+        mod_time = get_file_timestamp(TEXT_FILE)
+        if last_mod_time != mod_time:
+            last_mod_time = mod_time
+            main()
         time.sleep(1)  # Проверка раз в секунду
 
 if __name__ == "__main__":
