@@ -367,6 +367,39 @@ def draw_answer(result, targets, anchors, relations, segmentation, depth, intrin
     with open(os.path.join(SAVE_PATH, f"{save_filename.split('.')[0]}.txt"), "a") as f:
         f.write(information)    
 
+    for rel in relations:
+        if rel[0] not in targets:
+            continue
+        x1, y1, z1 = objects_by_id[rel[0]]
+        x2, y2, z2 = objects_by_id[rel[1]]
+
+        line_3d = np.array([
+            [x1, y1, z1],  # center 1
+            [x2, y2, z2],  # bbox2
+        ])
+
+        line2d = project_point_cloud_to_image(segmentation, depth, camera_pose, intrinsics, line_3d)
+        #print(line2d)
+        cv2.line(segmentation, tuple(line2d[0]), tuple(line2d[1]), (255, 255, 0), 2)
+
+        mid_x = int((line2d[0][0] + line2d[1][0]) / 2)
+        mid_y = int((line2d[0][1] + line2d[1][1]) / 2)
+        wrapped_text = textwrap.fill(rel[2], width=15)
+        y0 = mid_y-25
+        for i, line in enumerate(wrapped_text.split('\n')):
+
+            # Get the text size to create a background rectangle
+            (text_width, text_height), _ = cv2.getTextSize(line, font, font_scale, thickness)
+            y = y0 + i*text_height
+            # Define the rectangle's top-left and bottom-right corners (padding the text a bit)
+            top_left = (mid_x-25, y)
+            bottom_right = (mid_x-25 + text_width, y - text_height)
+
+            # Draw a white rectangle as the background
+            # cv2.rectangle(segmentation, top_left, bottom_right, (255, 255, 255), thickness=cv2.FILLED)
+
+            cv2.putText(segmentation, line, (mid_x-25, y), font, font_scale, (0, 0, 0), thickness, cv2.LINE_AA)
+
     for obj in result:
         if 'A wall on the side of a building' in obj['description'] or (int(obj['id']) not in targets and int(obj['id']) not in anchors):
             #print("Filtered 3D", int(obj['id']), targets, anchors)
@@ -410,48 +443,16 @@ def draw_answer(result, targets, anchors, relations, segmentation, depth, intrin
 
         # Draw a white rectangle as the background
         if text in targets_ids:
-            color = (255, 0, 0)
+            color = (144, 128, 250)
         elif text in anchors_ids:
-            color = (0, 255, 0)
+            color = (144, 238, 144)
         else:
-            color = (0, 0, 255)
+            color = (250, 206, 135)
+        logger.info(f"{text}, color: {color}")
         cv2.rectangle(segmentation, top_left, bottom_right, color, thickness=cv2.FILLED)
 
         cv2.putText(segmentation, text, (box_2d[0][0], box_2d[0][1]), font, font_scale, COLOR_CV, thickness, cv2.LINE_AA)
 
-    for rel in relations:
-        if rel[0] not in targets:
-            continue
-        x1, y1, z1 = objects_by_id[rel[0]]
-        x2, y2, z2 = objects_by_id[rel[1]]
-
-        line_3d = np.array([
-            [x1, y1, z1],  # center 1
-            [x2, y2, z2],  # bbox2
-        ])
-
-        line2d = project_point_cloud_to_image(segmentation, depth, camera_pose, intrinsics, line_3d)
-        #print(line2d)
-        cv2.line(segmentation, tuple(line2d[0]), tuple(line2d[1]), (255, 255, 0), 2)
-
-        mid_x = int((line2d[0][0] + line2d[1][0]) / 2)
-        mid_y = int((line2d[0][1] + line2d[1][1]) / 2)
-        wrapped_text = textwrap.fill(rel[2], width=15)
-        y0 = mid_y-25
-        for i, line in enumerate(wrapped_text.split('\n')):
-
-            # Get the text size to create a background rectangle
-            (text_width, text_height), _ = cv2.getTextSize(line, font, font_scale, thickness)
-            y = y0 + i*text_height
-            # Define the rectangle's top-left and bottom-right corners (padding the text a bit)
-            top_left = (mid_x-25, y)
-            bottom_right = (mid_x-25 + text_width, y - text_height)
-
-            # Draw a white rectangle as the background
-            # cv2.rectangle(segmentation, top_left, bottom_right, (255, 255, 255), thickness=cv2.FILLED)
-
-            cv2.putText(segmentation, line, (mid_x-25, y), font, font_scale, (0, 0, 0), thickness, cv2.LINE_AA)
-    
     cv2.imwrite(os.path.join(SAVE_PATH, f"overlayed_masks_sam_and_graph_{save_filename}"), segmentation)
 
 def main():
