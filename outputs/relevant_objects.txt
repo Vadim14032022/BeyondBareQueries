@@ -1,2 +1,2 @@
-User query: Are there a blue marker?
-LLM answer: {'referred objects': ['a blue marker with id 24', 'a blue marker with id 27'], 'anchors': []}
+User query: Are there a pen?
+LLM answer: {'referred objects': ['blue marker with id 24', 'blue marker with id 27', 'green marker with id 33', 'green marker with id 37'], 'anchors': ['gray surface with id 10', 'gray surface with id 26', 'wooden table with id 20', 'wooden table with id 21', 'wooden table with id 22', 'wooden table with id 23', 'wooden table with id 28', 'wooden table with id 35', 'wooden table with id 36', 'wooden table with id 38']}

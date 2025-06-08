@@ -274,7 +274,7 @@ def draw_answer(result, targets, anchors, relations, segmentation, depth, intrin
     labels = [f"{obj['id']}: {obj['description']}" for obj in result
              if 'A wall on the side of a building' not in obj['description'] and obj['id'] not in targets and obj['id'] not in anchors 
              ]  # Labels for each point
-
+    others_ids = [l.split(':')[0] for l in labels]
     # Extract X, Y, Z coordinates
     x, y, z = points[:, 0], points[:, 1], points[:, 2]
     
@@ -303,7 +303,7 @@ def draw_answer(result, targets, anchors, relations, segmentation, depth, intrin
         labels = [f"{obj['id']}: {obj['description']}" for obj in result
                 if 'A wall on the side of a building' not in obj['description'] and obj['id'] in anchors 
                 ]  # Labels for each point
-        
+        anchors_ids = [l.split(':')[0] for l in labels]
         # Extract X, Y, Z coordinates
         x, y, z = points[:, 0], points[:, 1], points[:, 2]
 
@@ -328,7 +328,7 @@ def draw_answer(result, targets, anchors, relations, segmentation, depth, intrin
         labels = [f"{obj['id']}: {obj['description']}" for obj in result
                 if 'A wall on the side of a building' not in obj['description'] and obj['id'] in targets
                 ]  # Labels for each point
-
+        targets_ids = [l.split(':')[0] for l in labels]
         # Extract X, Y, Z coordinates
         x, y, z = points[:, 0], points[:, 1], points[:, 2]
 
@@ -409,7 +409,13 @@ def draw_answer(result, targets, anchors, relations, segmentation, depth, intrin
         bottom_right = (box_2d[0][0] + text_width + 10, box_2d[0][1] - text_height - 10)
 
         # Draw a white rectangle as the background
-        cv2.rectangle(segmentation, top_left, bottom_right, (255, 255, 255), thickness=cv2.FILLED)
+        if text in targets_ids:
+            color = (255, 0, 0)
+        elif text in anchors_ids:
+            color = (0, 255, 0)
+        else:
+            color = (0, 0, 255)
+        cv2.rectangle(segmentation, top_left, bottom_right, color, thickness=cv2.FILLED)
 
         cv2.putText(segmentation, text, (box_2d[0][0], box_2d[0][1]), font, font_scale, COLOR_CV, thickness, cv2.LINE_AA)
 
@@ -442,7 +448,7 @@ def draw_answer(result, targets, anchors, relations, segmentation, depth, intrin
             bottom_right = (mid_x-25 + text_width, y - text_height)
 
             # Draw a white rectangle as the background
-            cv2.rectangle(segmentation, top_left, bottom_right, (255, 255, 255), thickness=cv2.FILLED)
+            # cv2.rectangle(segmentation, top_left, bottom_right, (255, 255, 255), thickness=cv2.FILLED)
 
             cv2.putText(segmentation, line, (mid_x-25, y), font, font_scale, (0, 0, 0), thickness, cv2.LINE_AA)
     
