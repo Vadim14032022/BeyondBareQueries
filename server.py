@@ -292,28 +292,8 @@ def draw_answer(result, targets, anchors, relations, segmentation, depth, intrin
     
     # Add labels to each point
     for i in range(len(points)):
-        ax1.text(x[i], y[i], z[i]+0.02, result[i]['id'], fontsize=8, color='black', ha='center',)
-        json_table.append({'label': labels[i], 'color': '#7dabf5'})
-
-    if len(targets) > 0:
-        points = np.array([
-            obj['bbox_center'] for obj in result
-            if 'A wall on the side of a building' not in obj['description'] and obj['id'] in targets 
-        ])
-        labels = [f"{obj['id']}: {obj['description']}" for obj in result
-                if 'A wall on the side of a building' not in obj['description'] and obj['id'] in targets
-                ]  # Labels for each point
-        
-        # Extract X, Y, Z coordinates
-        x, y, z = points[:, 0], points[:, 1], points[:, 2]
-        
-        # Plot points
-        ax1.scatter(x, y, z, c='green', marker='o', s=50)
-        
-        # Add labels to each point
-        for i in range(len(points)):
-            ax1.text(x[i], y[i], z[i]+0.02, targets[i], fontsize=8, color='black', ha='center',)
-            json_table = [{'label': labels[i], 'color': '#53c44b'}] + json_table
+        ax1.text(x[i], y[i], z[i]+0.02, result[i]['id'], fontsize=12, color='black', ha='center',)
+        json_table.append({'label': labels[i], 'type': 'others'})
 
     if len(anchors) > 0:
         points = np.array([
@@ -328,39 +308,44 @@ def draw_answer(result, targets, anchors, relations, segmentation, depth, intrin
         x, y, z = points[:, 0], points[:, 1], points[:, 2]
 
         # Plot points
-        ax1.scatter(x, y, z, c='red', marker='o', s=50)
+        ax1.scatter(x, y, z, c='green', marker='o', s=50)
         
         # Add labels to each point
         for i in range(len(points)):
-            ax1.text(x[i], y[i], z[i]+0.02, anchors[i], fontsize=8, color='black', ha='center',)
-            json_table = [{'label': labels[i], 'color': '#c44b4b'}] + json_table
+            ax1.text(x[i], y[i], z[i]+0.02, anchors[i], fontsize=12, color='black', ha='center',)
+            json_table = [{'label': labels[i], 'type': 'anchors'}] + json_table
 
         # Labels
         ax1.set_xlabel('X')
         ax1.set_ylabel('Y')
         ax1.set_zlabel('Z')
 
-    if  len(targets) > 0 and len(anchors) > 0:
-        for rel in relations:
-            x1, y1, z1 = objects_by_id[rel[0]]
-            x2, y2, z2 = objects_by_id[rel[1]]
-            # Draw edge between two points
-            ax1.plot([x1, x2], [y1, y2], [z1, z2], 'k-', linewidth=2)
-            
-            # Calculate midpoint for text placement
-            mid_x = (x1 + x2) / 2
-            mid_y = (y1 + y2) / 2
-            mid_z = (z1+ z2) / 2
-            
-            # Add text above the edge
-            ax1.text(mid_x, mid_y, mid_z + 0.15, rel[2], fontsize=6, color='red', ha='center')
+    if len(targets) > 0:
+        points = np.array([
+            obj['bbox_center'] for obj in result
+            if 'A wall on the side of a building' not in obj['description'] and obj['id'] in targets 
+        ])
+        labels = [f"{obj['id']}: {obj['description']}" for obj in result
+                if 'A wall on the side of a building' not in obj['description'] and obj['id'] in targets
+                ]  # Labels for each point
+
+        # Extract X, Y, Z coordinates
+        x, y, z = points[:, 0], points[:, 1], points[:, 2]
+
+        # Plot points
+        ax1.scatter(x, y, z, c='red', marker='o', s=50)
+
+        # Add labels to each point
+        for i in range(len(points)):
+            ax1.text(x[i], y[i], z[i]+0.02, targets[i], fontsize=12, color='black', ha='center',)
+            json_table = [{'label': labels[i], 'type': 'targets'}] + json_table
 
     def update(angle):
-        ax1.view_init(elev=angle, azim=90)
+        ax1.view_init(elev=20, azim=angle)
         return fig,
     elev_angles = np.concatenate([
-        np.arange(10, 70, 2), 
-        np.arange(70, 9, -2) 
+        np.arange(70, 110, 2), 
+        np.arange(110, 70, -2) 
     ])
     rot_animation = animation.FuncAnimation(
         fig, update, frames=elev_angles, interval=100, blit=False

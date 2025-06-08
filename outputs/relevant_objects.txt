@@ -1,2 +1,2 @@
-User query: Are there a cup in the image?
-LLM answer: {'referred objects': ['a black cup with a blue object and three white and brown objects inside with id 8', 'a black cup with id 12'], 'anchors': ['a wooden table with id 20', 'a gray surface with id 10', 'a gray surface with id 26']}
+User query: Are there a blue marker?
+LLM answer: {'referred objects': ['a blue marker with id 24', 'a blue marker with id 27'], 'anchors': []}
