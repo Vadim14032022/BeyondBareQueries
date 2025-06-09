@@ -259,7 +259,7 @@ def project_point_cloud_to_image(image, depth_image, camera_pose, intrinsics_mat
 
 
 def draw_answer(result, targets, anchors, relations, segmentation, depth, intrinsics, pose, user_query, LLM_answer, save_filename, no_json=True):
-    json_table = []
+    json_table = {'objects': [], 'relations': []}
     camera_pose = np.linalg.inv(pose.cpu().numpy())
 
     objects_by_id = {
@@ -288,12 +288,12 @@ def draw_answer(result, targets, anchors, relations, segmentation, depth, intrin
     #ax1.set_ylim([-0.15, 1])  # Set Y-axis limits from 0 to 1
     #ax1.set_zlim([0.5, 3])  # Set Z-axis limits from 0 to 1
     # Plot points
-    ax1.scatter(x, y, z, c='blue', marker='o', s=50)
+    ax1.scatter(x, y, z, c='green', marker='o', s=50)
     
     # Add labels to each point
     for i in range(len(points)):
         ax1.text(x[i], y[i], z[i]+0.02, result[i]['id'], fontsize=12, color='black', ha='center',)
-        json_table.append({'label': labels[i], 'type': 'others'})
+        json_table['objects'].append({'label': labels[i], 'type': 'others'})
 
     if len(anchors) > 0:
         points = np.array([
@@ -308,12 +308,12 @@ def draw_answer(result, targets, anchors, relations, segmentation, depth, intrin
         x, y, z = points[:, 0], points[:, 1], points[:, 2]
 
         # Plot points
-        ax1.scatter(x, y, z, c='green', marker='o', s=50)
+        ax1.scatter(x, y, z, c='blue', marker='o', s=50)
         
         # Add labels to each point
         for i in range(len(points)):
             ax1.text(x[i], y[i], z[i]+0.02, anchors[i], fontsize=12, color='black', ha='center',)
-            json_table = [{'label': labels[i], 'type': 'anchors'}] + json_table
+            json_table['objects'] = [{'label': labels[i], 'type': 'anchors'}] + json_table['objects']
 
         # Labels
         ax1.set_xlabel('X')
@@ -338,7 +338,7 @@ def draw_answer(result, targets, anchors, relations, segmentation, depth, intrin
         # Add labels to each point
         for i in range(len(points)):
             ax1.text(x[i], y[i], z[i]+0.02, targets[i], fontsize=12, color='black', ha='center',)
-            json_table = [{'label': labels[i], 'type': 'targets'}] + json_table
+            json_table['objects'] = [{'label': labels[i], 'type': 'targets'}] + json_table['objects']
 
     def update(angle):
         ax1.view_init(elev=20, azim=angle)
@@ -352,9 +352,6 @@ def draw_answer(result, targets, anchors, relations, segmentation, depth, intrin
     )
     gif_path = os.path.join(SAVE_PATH, f"3d_{save_filename.split('.')[0]}.gif")
     rot_animation.save(gif_path, dpi=80, writer='pillow')
-
-    with open(os.path.join(SAVE_PATH, f"table_{save_filename.split('.')[0]}.json"), "w") as f:
-        json.dump(json_table, f)
 
     information = f"User query: {user_query}\n"
 
@@ -385,20 +382,7 @@ def draw_answer(result, targets, anchors, relations, segmentation, depth, intrin
         mid_x = int((line2d[0][0] + line2d[1][0]) / 2)
         mid_y = int((line2d[0][1] + line2d[1][1]) / 2)
         wrapped_text = textwrap.fill(rel[2], width=15)
-        y0 = mid_y-25
-        for i, line in enumerate(wrapped_text.split('\n')):
-
-            # Get the text size to create a background rectangle
-            (text_width, text_height), _ = cv2.getTextSize(line, font, font_scale, thickness)
-            y = y0 + i*text_height
-            # Define the rectangle's top-left and bottom-right corners (padding the text a bit)
-            top_left = (mid_x-25, y)
-            bottom_right = (mid_x-25 + text_width, y - text_height)
-
-            # Draw a white rectangle as the background
-            # cv2.rectangle(segmentation, top_left, bottom_right, (255, 255, 255), thickness=cv2.FILLED)
-
-            cv2.putText(segmentation, line, (mid_x-25, y), font, font_scale, (0, 0, 0), thickness, cv2.LINE_AA)
+        json_table['relations'].append({'sub': rel[0], 'obj': rel[1], 'rel': wrapped_text})
 
     for obj in result:
         if 'A wall on the side of a building' in obj['description'] or (int(obj['id']) not in targets and int(obj['id']) not in anchors):
@@ -445,15 +429,18 @@ def draw_answer(result, targets, anchors, relations, segmentation, depth, intrin
         if text in targets_ids:
             color = (144, 128, 250)
         elif text in anchors_ids:
-            color = (144, 238, 144)
-        else:
             color = (250, 206, 135)
+        else:
+            color = (144, 238, 144)
         logger.info(f"{text}, color: {color}")
         cv2.rectangle(segmentation, top_left, bottom_right, color, thickness=cv2.FILLED)
 
         cv2.putText(segmentation, text, (box_2d[0][0], box_2d[0][1]), font, font_scale, COLOR_CV, thickness, cv2.LINE_AA)
 
     cv2.imwrite(os.path.join(SAVE_PATH, f"overlayed_masks_sam_and_graph_{save_filename}"), segmentation)
+
+    with open(os.path.join(SAVE_PATH, f"table_{save_filename.split('.')[0]}.json"), "w") as f:
+        json.dump(json_table, f)
 
 def main():
     """Функция, выполняемая при получении сообщения от клиента."""
