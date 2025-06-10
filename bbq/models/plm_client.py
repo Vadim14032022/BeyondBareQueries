@@ -21,7 +21,7 @@ def dump_pkl(obj):
     return pkl_path
 
 class PlmChat:
-    def __init__(self, api_url="http://localhost:31623"):
+    def __init__(self, api_url="http://localhost:31624"):
         self.api_url = api_url
         self.api_generate = "/generate"
         self.api_preprocess_image = "/preprocess_image"

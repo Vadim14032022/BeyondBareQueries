@@ -257,8 +257,7 @@ def project_point_cloud_to_image(image, depth_image, camera_pose, intrinsics_mat
     """
     return pixel_coords
 
-
-def draw_answer(result, targets, anchors, relations, segmentation, depth, intrinsics, pose, user_query, LLM_answer, save_filename, no_json=True):
+def draw_answer(result, targets, anchors, relations, segmentation, depth, intrinsics, pose, user_query, LLM_answer, save_filename, no_json=True, final_targets=[]):
     json_table = {'objects': [], 'relations': []}
     camera_pose = np.linalg.inv(pose.cpu().numpy())
 
@@ -288,13 +287,14 @@ def draw_answer(result, targets, anchors, relations, segmentation, depth, intrin
     #ax1.set_ylim([-0.15, 1])  # Set Y-axis limits from 0 to 1
     #ax1.set_zlim([0.5, 3])  # Set Z-axis limits from 0 to 1
     # Plot points
-    ax1.scatter(x, y, z, c='green', marker='o', s=50)
+    ax1.scatter(x, y, z, c='grey', marker='o', s=50)
     
     # Add labels to each point
     for i in range(len(points)):
         ax1.text(x[i], y[i], z[i]+0.02, result[i]['id'], fontsize=12, color='black', ha='center',)
         json_table['objects'].append({'label': labels[i], 'type': 'others'})
 
+    anchors_ids = []
     if len(anchors) > 0:
         points = np.array([
             obj['bbox_center'] for obj in result
@@ -320,35 +320,56 @@ def draw_answer(result, targets, anchors, relations, segmentation, depth, intrin
         ax1.set_ylabel('Y')
         ax1.set_zlabel('Z')
 
+    targets_ids = []
     if len(targets) > 0:
         points = np.array([
             obj['bbox_center'] for obj in result
-            if 'A wall on the side of a building' not in obj['description'] and obj['id'] in targets 
+            if 'A wall on the side of a building' not in obj['description'] and obj['id'] in targets and obj['id'] not in final_targets
         ])
         labels = [f"{obj['id']}: {obj['description']}" for obj in result
-                if 'A wall on the side of a building' not in obj['description'] and obj['id'] in targets
+                if 'A wall on the side of a building' not in obj['description'] and obj['id'] in targets and obj['id'] not in final_targets
                 ]  # Labels for each point
         targets_ids = [l.split(':')[0] for l in labels]
         # Extract X, Y, Z coordinates
         x, y, z = points[:, 0], points[:, 1], points[:, 2]
 
         # Plot points
-        ax1.scatter(x, y, z, c='red', marker='o', s=50)
+        ax1.scatter(x, y, z, c="green", marker='o', s=50)
 
         # Add labels to each point
         for i in range(len(points)):
             ax1.text(x[i], y[i], z[i]+0.02, targets[i], fontsize=12, color='black', ha='center',)
             json_table['objects'] = [{'label': labels[i], 'type': 'targets'}] + json_table['objects']
 
+    if len(final_targets) > 0:
+        points = np.array([
+            obj['bbox_center'] for obj in result
+            if 'A wall on the side of a building' not in obj['description'] and obj['id'] in final_targets
+        ])
+        labels = [f"{obj['id']}: {obj['description']}" for obj in result
+                if 'A wall on the side of a building' not in obj['description'] and obj['id'] in final_targets
+                ]  # Labels for each point
+        # Extract X, Y, Z coordinates
+        x, y, z = points[:, 0], points[:, 1], points[:, 2]
+
+        # Plot points
+        ax1.scatter(x, y, z, c="red", marker='o', s=50)
+
+        # Add labels to each point
+        for i in range(len(points)):
+            ax1.text(x[i], y[i], z[i]+0.02, targets[i], fontsize=12, color='black', ha='center',)
+            json_table['objects'] = [{'label': labels[i], 'type': 'answer'}] + json_table['objects']
+
+
     def update(angle):
         ax1.view_init(elev=20, azim=angle)
         return fig,
     elev_angles = np.concatenate([
-        np.arange(70, 110, 2), 
-        np.arange(110, 70, -2) 
+        np.arange(70, 110, 1), 
+        np.arange(110, 70, -1) 
     ])
     rot_animation = animation.FuncAnimation(
-        fig, update, frames=elev_angles, interval=100, blit=False
+        fig, update, frames=elev_angles, interval=200, blit=False
     )
     gif_path = os.path.join(SAVE_PATH, f"3d_{save_filename.split('.')[0]}.gif")
     rot_animation.save(gif_path, dpi=80, writer='pillow')
@@ -384,11 +405,14 @@ def draw_answer(result, targets, anchors, relations, segmentation, depth, intrin
         wrapped_text = textwrap.fill(rel[2], width=15)
         json_table['relations'].append({'sub': rel[0], 'obj': rel[1], 'rel': wrapped_text})
 
+    print("targets_ids: ", targets_ids)
+    print("anchors_ids: ", anchors_ids)
     for obj in result:
-        if 'A wall on the side of a building' in obj['description'] or (int(obj['id']) not in targets and int(obj['id']) not in anchors):
+        if 'A wall on the side of a building' in obj['description']:
             #print("Filtered 3D", int(obj['id']), targets, anchors)
             continue
-
+        if (len(targets)>0 or len(anchors)>0) and int(obj['id']) not in targets and int(obj['id']) not in anchors:
+            continue
         cx, cy, cz = np.array(obj['bbox_center'])
         dx, dy, dz = np.array(obj['bbox_extent']) / 2.0
         box_3d = np.array([
@@ -426,15 +450,16 @@ def draw_answer(result, targets, anchors, relations, segmentation, depth, intrin
         bottom_right = (box_2d[0][0] + text_width + 10, box_2d[0][1] - text_height - 10)
 
         # Draw a white rectangle as the background
-        if text in targets_ids:
+        if obj['id'] in final_targets:
             color = (144, 128, 250)
+        elif text in targets_ids:
+            color = (144, 238, 144)
         elif text in anchors_ids:
             color = (250, 206, 135)
         else:
-            color = (144, 238, 144)
-        logger.info(f"{text}, color: {color}")
+            color = (169, 169, 169)
+        print(obj['id'], color)
         cv2.rectangle(segmentation, top_left, bottom_right, color, thickness=cv2.FILLED)
-
         cv2.putText(segmentation, text, (box_2d[0][0], box_2d[0][1]), font, font_scale, COLOR_CV, thickness, cv2.LINE_AA)
 
     cv2.imwrite(os.path.join(SAVE_PATH, f"overlayed_masks_sam_and_graph_{save_filename}"), segmentation)
@@ -454,7 +479,8 @@ def main():
          os.makedirs(SAVE_PATH, exist_ok=True)
          with gzip.open(os.path.join(SAVE_PATH, "meta.pkl.gz"), "wb") as file:
             pickle.dump({"config": config}, file)
-        
+    color_img = cv2.imread(COLOR_PATH)
+    cv2.imwrite(os.path.join(SAVE_PATH, "init_image.png"), color_img)
     logger.info(f"Parsed arguments. Utilizing config from {CONFIG_FILE}.")
 
     #rgbd_dataset = get_dataset(config["dataset"])
@@ -529,6 +555,9 @@ def main():
     result = describe_objects(objects)
     torch.cuda.empty_cache()
 
+    segmentation0 = deepcopy(segmentation)
+    draw_answer(result, [], [], [], segmentation0, depth, INTRINSICS, pose, user_query, "dummy answer", "som_objects.png")
+
     logger.info('Saving objects.')
     with open(os.path.join(SAVE_PATH, "objects.json"), "w") as f:
         json.dump(result, f, indent=2)
@@ -574,21 +603,21 @@ def main():
     full_answer, final_answer, relations, pretty_answer = llm.select_referred_object(user_query, related_objects)
     logger.info(full_answer)
 
-    targets = [obj['id'] for obj in related_objects['target_objects'] if obj['id'] == final_answer]
+    final_targets = [obj['id'] for obj in related_objects['target_objects'] if obj['id'] == final_answer]
     filtered_relations = []
 
     for rel in relations:
         #print(rel, final_answer)
         if rel[0] == final_answer:
-            targets.append(rel[0])
-            anchors.append(rel[1])
+#            targets.append(rel[0])
+#            anchors.append(rel[1])
             filtered_relations.append(rel)
 
 
     json_answer = pretty_answer
     segmentation2 = deepcopy(segmentation)
 
-    draw_answer(result, targets, anchors, filtered_relations, segmentation2, depth, INTRINSICS, pose, user_query, json_answer, "final_answer.png")
+    draw_answer(result, targets, anchors, filtered_relations, segmentation2, depth, INTRINSICS, pose, user_query, json_answer, "final_answer.png", final_targets=final_targets)
 
 def get_file_timestamp(remote_path):
     if os.path.exists(remote_path):
