@@ -155,6 +155,7 @@ def describe_objects(objects):
             ### caption
             image = cv2.imread(COLOR_PATH) # we work with BGR images so it converts them to RGB
             image = image[..., :3] 
+            image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB) # bgr -> rgb
             image = Image.fromarray(image)
 
             mask = object_["local_mask"]

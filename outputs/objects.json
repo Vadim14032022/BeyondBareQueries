@@ -2,28 +2,28 @@
   {
     "id": 0,
     "bbox_extent": [
-      0.33,
+      0.31,
       0.13,
       0.21
     ],
     "bbox_center": [
-      -0.18,
+      -0.19,
       0.14,
-      1.07
+      1.06
     ],
-    "description": "A pair of scissors."
+    "description": "A white piece of paper."
   },
   {
     "id": 1,
     "bbox_extent": [
-      0.1,
+      0.11,
       0.1,
       0.12
     ],
     "bbox_center": [
       -0.84,
       -0.22,
-      1.59
+      1.58
     ],
     "description": "A white test tube rack."
   },
@@ -31,12 +31,12 @@
     "id": 2,
     "bbox_extent": [
       0.15,
-      0.12,
+      0.11,
       0.17
     ],
     "bbox_center": [
       0.23,
-      -0.0,
+      0.0,
       1.27
     ],
     "description": "A white remote control."
@@ -44,12 +44,12 @@
   {
     "id": 3,
     "bbox_extent": [
-      0.11,
+      0.1,
       0.07,
-      0.14
+      0.13
     ],
     "bbox_center": [
-      0.1,
+      0.09,
       0.07,
       1.14
     ],
@@ -67,14 +67,14 @@
       0.15,
       1.04
     ],
-    "description": "A small, rectangular box with a blue top and orange bottom, lying on a flat surface."
+    "description": "A small, rectangular box with a blue bottom and an orange top, featuring a white logo and a barcode on the side, sits on a light-colored wooden surface."
   },
   {
     "id": 5,
     "bbox_extent": [
-      0.05,
-      0.11,
-      0.14
+      0.06,
+      0.1,
+      0.15
     ],
     "bbox_center": [
       -0.22,
@@ -88,19 +88,19 @@
     "bbox_extent": [
       0.13,
       0.02,
-      0.04
+      0.03
     ],
     "bbox_center": [
-      -0.09,
+      -0.1,
       0.23,
-      0.93
+      0.92
     ],
     "description": "A pair of scissors with black handles and silver blades."
   },
   {
     "id": 7,
     "bbox_extent": [
-      0.07,
+      0.05,
       0.02,
       0.03
     ],
@@ -109,7 +109,7 @@
       0.21,
       0.95
     ],
-    "description": "A small, rectangular, beige and purple eraser."
+    "description": "A small, rectangular, white and red box with a barcode on the side, lying on a wooden surface."
   },
   {
     "id": 8,
@@ -123,35 +123,35 @@
       0.02,
       1.06
     ],
-    "description": "A black cup with a blue object and three white and brown objects inside."
+    "description": "A black cup with a red marker and three blue and white markers."
   },
   {
     "id": 9,
     "bbox_extent": [
-      0.05,
-      0.03,
-      0.05
+      0.06,
+      0.04,
+      0.04
     ],
     "bbox_center": [
-      0.27,
-      0.24,
+      0.28,
+      0.25,
       0.89
     ],
-    "description": "A small, white, plastic object with a hole in the center, resembling a small ring or washer, is placed on a light-colored wooden surface."
+    "description": "A small, white, plastic object with a hole in the center, resembling a small plastic ring or washer, sitting on a light-colored wooden surface."
   },
   {
     "id": 10,
     "bbox_extent": [
-      0.02,
       0.03,
-      0.04
+      0.03,
+      0.05
     ],
     "bbox_center": [
       0.06,
       0.14,
       1.04
     ],
-    "description": "A blue plastic egg with a small opening at the top, sitting on a gray surface."
+    "description": "A yellow plastic egg with a small, rectangular, black and white label on the side."
   },
   {
     "id": 11,
@@ -163,7 +163,7 @@
     "bbox_center": [
       0.59,
       -0.25,
-      1.61
+      1.62
     ],
     "description": "A white test tube rack."
   },
@@ -176,7 +176,7 @@
     ],
     "bbox_center": [
       0.01,
-      0.08,
+      0.07,
       1.08
     ],
     "description": "A black cup."
@@ -184,13 +184,13 @@
   {
     "id": 13,
     "bbox_extent": [
-      0.1,
+      0.09,
       0.21,
-      0.14
+      0.13
     ],
     "bbox_center": [
       -1.03,
-      -0.32,
+      -0.33,
       1.61
     ],
     "description": "A white test tube rack."
@@ -199,13 +199,13 @@
     "id": 14,
     "bbox_extent": [
       0.63,
-      0.34,
-      0.27
+      0.32,
+      0.29
     ],
     "bbox_center": [
       0.81,
       -0.37,
-      1.55
+      1.56
     ],
     "description": "A white test tube rack."
   },
@@ -232,16 +232,16 @@
     ],
     "bbox_center": [
       -0.38,
-      -0.37,
+      -0.36,
       1.56
     ],
-    "description": "A vent."
+    "description": "A white test tube rack."
   },
   {
     "id": 17,
     "bbox_extent": [
-      0.09,
-      0.07,
+      0.08,
+      0.06,
       0.09
     ],
     "bbox_center": [
@@ -254,22 +254,22 @@
   {
     "id": 18,
     "bbox_extent": [
-      0.09,
-      0.05,
+      0.08,
+      0.04,
       0.12
     ],
     "bbox_center": [
       0.28,
-      -0.01,
+      -0.02,
       1.29
     ],
-    "description": "A gray wall."
+    "description": "A wooden table."
   },
   {
     "id": 19,
     "bbox_extent": [
-      0.2,
-      0.24,
+      0.19,
+      0.23,
       0.18
     ],
     "bbox_center": [
@@ -277,14 +277,14 @@
       -0.42,
       1.52
     ],
-    "description": "A blue, flat, smooth surface with a faint, curved line."
+    "description": "A red, circular object with a smooth, matte finish and a subtle, faint line running along its edge."
   },
   {
     "id": 20,
     "bbox_extent": [
       0.09,
       0.04,
-      0.05
+      0.06
     ],
     "bbox_center": [
       -0.19,
@@ -297,22 +297,22 @@
     "id": 21,
     "bbox_extent": [
       0.04,
-      0.1,
+      0.11,
       0.07
     ],
     "bbox_center": [
-      -0.13,
+      -0.12,
       -0.37,
       1.56
     ],
-    "description": "A wooden table."
+    "description": "A closed wooden door with a glass panel."
   },
   {
     "id": 22,
     "bbox_extent": [
       0.09,
-      0.07,
-      0.12
+      0.08,
+      0.11
     ],
     "bbox_center": [
       0.33,
@@ -324,72 +324,72 @@
   {
     "id": 23,
     "bbox_extent": [
-      0.07,
-      0.05,
-      0.08
+      0.06,
+      0.06,
+      0.06
     ],
     "bbox_center": [
-      0.13,
+      0.12,
       0.01,
-      1.24
+      1.23
     ],
-    "description": "A wooden table."
+    "description": "A white remote control."
   },
   {
     "id": 24,
     "bbox_extent": [
       0.05,
       0.05,
-      0.07
+      0.08
     ],
     "bbox_center": [
       0.19,
       0.15,
       1.03
     ],
-    "description": "A blue marker."
+    "description": "A red marker."
   },
   {
     "id": 25,
     "bbox_extent": [
-      0.12,
-      0.03,
-      0.07
+      0.11,
+      0.04,
+      0.09
     ],
     "bbox_center": [
       0.56,
       -0.17,
-      1.51
+      1.52
     ],
-    "description": "A white test tube rack."
+    "description": "A white rectangular object with a small circular indentation on top, possibly a test tube rack, is placed on a white surface."
   },
   {
     "id": 26,
     "bbox_extent": [
-      0.36,
-      0.18,
+      0.35,
+      0.17,
       0.26
     ],
     "bbox_center": [
-      0.59,
+      0.58,
       -0.16,
       1.52
     ],
-    "description": "A black metal rack with a white plastic top, containing a white rectangular object, sits on a gray surface."
+    "description": "A black plastic test tube rack."
   },
   {
     "id": 27,
     "bbox_extent": [
       0.03,
       0.03,
-      0.07
+      0.05
     ],
     "bbox_center": [
       0.15,
-      0.11,
+      0.12,
       1.09
     ],
-    "description": "A blue marker."
+    "description": "A red marker."
   },
   {
     "id": 28,
@@ -403,12 +403,12 @@
       -0.38,
       1.56
     ],
-    "description": "A wooden table."
+    "description": "A white test tube rack."
   },
   {
     "id": 29,
     "bbox_extent": [
-      0.1,
+      0.09,
       0.04,
       0.04
     ],
@@ -427,7 +427,7 @@
       0.05
     ],
     "bbox_center": [
-      0.21,
+      0.2,
       0.03,
       1.19
     ],
@@ -436,35 +436,35 @@
   {
     "id": 31,
     "bbox_extent": [
-      0.04,
+      0.05,
       0.02,
-      0.04
+      0.03
     ],
     "bbox_center": [
-      -0.14,
+      -0.13,
       0.21,
-      0.96
+      0.95
     ],
     "description": "A pair of scissors with black handles and a silver blade."
   },
   {
     "id": 32,
     "bbox_extent": [
-      0.03,
+      0.04,
       0.11,
-      0.08
+      0.1
     ],
     "bbox_center": [
       -0.16,
-      -0.09,
+      -0.1,
       1.33
     ],
-    "description": "A white plastic bottle with a white cap and a label with a red, blue, and purple design."
+    "description": "A white plastic bottle with a red and purple label."
   },
   {
     "id": 33,
     "bbox_extent": [
-      0.08,
+      0.07,
       0.01,
       0.01
     ],
@@ -473,42 +473,42 @@
       0.27,
       0.84
     ],
-    "description": "A green marker with a white cap."
+    "description": "A green and white marker."
   },
   {
     "id": 34,
     "bbox_extent": [
-      0.08,
       0.09,
-      0.14
+      0.09,
+      0.13
     ],
     "bbox_center": [
       0.79,
-      -0.14,
+      -0.13,
       1.5
     ],
-    "description": "A white test tube rack."
+    "description": "A black metal test tube rack."
   },
   {
     "id": 35,
     "bbox_extent": [
-      0.06,
-      0.04,
-      0.04
+      0.05,
+      0.02,
+      0.03
     ],
     "bbox_center": [
       0.23,
-      0.06,
-      1.19
+      0.05,
+      1.18
     ],
     "description": "A wooden table."
   },
   {
     "id": 36,
     "bbox_extent": [
-      0.09,
+      0.1,
       0.05,
-      0.08
+      0.09
     ],
     "bbox_center": [
       0.33,
@@ -520,13 +520,13 @@
   {
     "id": 37,
     "bbox_extent": [
-      0.06,
+      0.04,
       0.01,
-      0.03
+      0.02
     ],
     "bbox_center": [
-      0.16,
-      0.27,
+      0.15,
+      0.26,
       0.86
     ],
     "description": "A green marker."
@@ -536,13 +536,13 @@
     "bbox_extent": [
       0.09,
       0.04,
-      0.06
+      0.05
     ],
     "bbox_center": [
       -0.06,
       -0.4,
       1.54
     ],
-    "description": "A wooden table."
+    "description": "A closed wooden door with a glass panel."
   }
 ]
